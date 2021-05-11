@@ -34,7 +34,10 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         flexDirection: 'row',
         justifyContent: 'space-between',  
-        elevation: 4,
+        elevation: 10,
+        shadowOffset: {width:5,height: 5, },
+        shadowColor: gray,
+        shadowOpacity: 1.0,
     },
     container2: {
         flexDirection: 'row',
