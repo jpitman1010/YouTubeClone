@@ -2,21 +2,21 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 
 
-const MiniCard = ()=>{
+const MiniCard = (props)=>{
     return(
         <View style={{flexDirection:"row", margin:10}}>
               <Image 
-            source={{uri:'https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'}}
+            source={{uri:`https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
             style={styles.images}
             />
             <View style={styles.textView}  ellipsizeMode="tail">
                 <Text 
                 style={styles.text}
                 numberOfLines={3}> 
-                This is a mini-card page that shows up on the search page.  It will do ... if I type too much.
+                {props.title}
                 </Text>
                 <Text style={styles.text2}>
-                    And this is the description after the title of the minicard.
+                    {props.channel}
                 </Text>
             </View>
         </View>
