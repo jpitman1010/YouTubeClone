@@ -3,10 +3,14 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Entypo, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Constant from 'expo-constants';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const gray = "#212121"
 
 export default function Header() {
+    const navigation = useNavigation()
 
   return (
     <View style={styles.container1}>
@@ -18,8 +22,9 @@ export default function Header() {
         </View>
         <View style={styles.container3} >
         
-        <Entypo name= "video-camera" size={28} color={gray}/>
-        <FontAwesome name="search" size={24} color="black" />
+        <Entypo name= "video-camera" size={24} color={gray}/>
+        <FontAwesome name="search" size={24} color="black" 
+        onPress={()=>navigation.navigate("Search")}/>
         <MaterialIcons name="account-circle" size={24} color="black" />
         </View>
       
@@ -29,7 +34,6 @@ export default function Header() {
 
 const styles = StyleSheet.create({
     container1: {
-        marginTop: Constant.statusBarHeight,
         height:42,
         backgroundColor: "white",
         flexDirection: 'row',
@@ -38,16 +42,20 @@ const styles = StyleSheet.create({
         shadowOffset: {width:5,height: 5, },
         shadowColor: gray,
         shadowOpacity: 1.0,
+        marginBottom: 10,
     },
     container2: {
         flexDirection: 'row',
         marginLeft: 15,
+        marginTop: 5,
+
     },
     container3: {
         flexDirection: 'row',
         marginLeft: 15,
         width: 150,     
         justifyContent: 'space-around',  
+        marginTop: 5,
 
     },
     text: {

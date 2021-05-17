@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
 import { Entypo, MaterialIcons, FontAwesome } from '@expo/vector-icons';
