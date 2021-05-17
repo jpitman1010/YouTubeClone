@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, ScrollView, TextInput, FlatList, ActivityIndica
 import { Ionicons } from '@expo/vector-icons';
 import MiniCard from '../components/MiniCard';
 import API_KEY from '../../API';
+import Constant from 'expo-constants';
 
-const Search = ()=>{
+
+const Search = ({navigation})=>{
     
     const [value, setValue] = useState()
     const [miniCardData, setMiniCardData] = useState('')
@@ -26,6 +28,7 @@ const Search = ()=>{
         <View style={{flex:1}}>
             <View style={{
             flexDirection:'row', 
+            marginTop: Constant.statusBarHeight,
             padding: 5, 
             justifyContent:'space-around',
             elevation: 5,
@@ -33,7 +36,8 @@ const Search = ()=>{
             shadowColor: 'gray',
             shadowOpacity: 1.0, 
             backgroundColor:'white',}}>
-                <Ionicons name="md-arrow-back" size={32}/>
+                <Ionicons name="md-arrow-back" size={32}
+                onPress={()=>navigation.goBack()}/>
                 <TextInput 
                 value = {value}
                 onChangeText = {(text)=>{
@@ -52,7 +56,6 @@ const Search = ()=>{
                     videoId={item.id.videoId}
                     title={item.snippet.title}
                     channel={item.snippet.channelTitle}
-                    
                     />
                 }}
                 keyExtractor={item=>item.id.videoId}
