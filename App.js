@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 
 import Home from './src/screens/Home';
@@ -14,7 +16,10 @@ import Explore from './src/screens/Explore';
 import Subscribe from './src/screens/Subscribe';
 import Constant from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
+import { ReactReduxContext } from 'react-redux';
+import { reducer } from './src/reducers/reducer';
 
+const store = createStore()
 
 const Stack = createStackNavigator()
 const Tabs = createBottomTabNavigator()
@@ -52,15 +57,15 @@ const RootHome = ()=>{
 
 export default function App() {
   return (
-   <NavigationContainer>
-     <Stack.Navigator>
-       <Stack.Screen name="Root Home" component={RootHome} />
-       <Stack.Screen name="Search" component={Search} />
-       <Stack.Screen name="Video Player" component={VideoPlayer} />
-     </Stack.Navigator>
-   </NavigationContainer>
-
-
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Root Home" component={RootHome} />
+          <Stack.Screen name="Search" component={Search} />
+          <Stack.Screen name="Video Player" component={VideoPlayer} />
+        </Stack.Navigator>
+      </NavigationContainer>
+   </Provider>
   );
 }
 

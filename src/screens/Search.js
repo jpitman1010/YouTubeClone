@@ -3,13 +3,16 @@ import { StyleSheet, Text, View, ScrollView, TextInput, FlatList, ActivityIndica
 import { Ionicons } from '@expo/vector-icons';
 import MiniCard from '../components/MiniCard';
 import API_KEY from '../../API';
-import Constant from 'expo-constants';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 const Search = ({navigation})=>{
     
+    const dispatch = useDispatch()
     const [value, setValue] = useState()
-    const [miniCardData, setMiniCardData] = useState('')
+    const miniCardData = useSelector(state=>{
+        return state
+    })
     const [loading, setLoading] = useState(false)
 
     const fetchData = ()=>{
@@ -18,17 +21,15 @@ const Search = ({navigation})=>{
         .then(res=>res.json())
         .then(data=>{
             setLoading(false)
-            setMiniCardData(data.items)
+            dispatch({type:"add", payload:data.items})
         })
   
     }
 
 
     return(
-        <View style={{flex:1}}>
             <View style={{
             flexDirection:'row', 
-            marginTop: Constant.statusBarHeight,
             padding: 5, 
             justifyContent:'space-around',
             elevation: 5,
@@ -46,7 +47,6 @@ const Search = ({navigation})=>{
                 style={{width:'70%', backgroundColor:"#e6e6e6"}}
                 />
                  <Ionicons name="md-send" size={29} onPress={()=>fetchData()}/>
-            </View>
            {loading ?<ActivityIndicator size="large" color="red" style={{marginTop:10}}/>
             :null}
             <FlatList
