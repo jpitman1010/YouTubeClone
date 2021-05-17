@@ -28,6 +28,7 @@ const Search = ({navigation})=>{
 
 
     return(
+        <View>
             <View style={{
             flexDirection:'row', 
             padding: 5, 
@@ -47,6 +48,7 @@ const Search = ({navigation})=>{
                 style={{width:'70%', backgroundColor:"#e6e6e6"}}
                 />
                  <Ionicons name="md-send" size={29} onPress={()=>fetchData()}/>
+                 </View>
            {loading ?<ActivityIndicator size="large" color="red" style={{marginTop:10}}/>
             :null}
             <FlatList
@@ -59,8 +61,7 @@ const Search = ({navigation})=>{
                     />
                 }}
                 keyExtractor={item=>item.id.videoId}
-            >
-            </FlatList>
+            />
         </View>
     )
 }
