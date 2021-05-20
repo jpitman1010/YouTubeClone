@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, useTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from 'react-native-vector-icons/Ionicons';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
@@ -16,18 +16,38 @@ import Explore from './src/screens/Explore';
 import Subscribe from './src/screens/Subscribe';
 import Constant from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
-import { ReactReduxContext } from 'react-redux';
 import { reducer } from './src/reducers/reducer';
 
-const store = createStore()
+const customDarkTheme={
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    headerColor:"#404040",
+    iconColor:"white",
+    tabIcon:"white"
+  }
+}
+const customDefaultTheme={
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    headerColor:"white",
+    iconColor:"black",
+    tabIcon:"red"
+
+  }
+}
+const store = createStore(reducer)
 
 const Stack = createStackNavigator()
 const Tabs = createBottomTabNavigator()
 
 const RootHome = ()=>{
+  const {colors} = useTheme()
+  const selectedIcon = colors.tabIcon
   return(
     <Tabs.Navigator
-    screenOptions={({ route }) => ({
+    screenOptions={({route}) => ({
       tabBarIcon: ({ focused, color }) => {
         let iconName;
 
@@ -44,7 +64,7 @@ const RootHome = ()=>{
       },
     })}
     tabBarOptions={{
-      activeTintColor: 'red',
+      activeTintColor: colors.tabIcon,
       inactiveTintColor: 'gray',
     }}
   >
@@ -58,11 +78,11 @@ const RootHome = ()=>{
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
+      <NavigationContainer theme={customDarkTheme}>
         <Stack.Navigator>
           <Stack.Screen name="Root Home" component={RootHome} />
           <Stack.Screen name="Search" component={Search} />
-          <Stack.Screen name="Video Player" component={VideoPlayer} />
+          <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
         </Stack.Navigator>
       </NavigationContainer>
    </Provider>

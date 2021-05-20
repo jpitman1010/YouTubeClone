@@ -4,10 +4,12 @@ import { Ionicons } from '@expo/vector-icons';
 import MiniCard from '../components/MiniCard';
 import API_KEY from '../../API';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTheme } from '@react-navigation/native';
 
 
 const Search = ({navigation})=>{
-    
+    const {colors} = useTheme();
+    const iconColor = colors.iconColor;
     const dispatch = useDispatch()
     const [value, setValue] = useState()
     const miniCardData = useSelector(state=>{
@@ -37,17 +39,17 @@ const Search = ({navigation})=>{
             shadowOffset: {width:2.5,height: 2.5, },
             shadowColor: 'gray',
             shadowOpacity: 1.0, 
-            backgroundColor:'white',}}>
+            backgroundColor:colors.headerColor,}}>
                 <Ionicons name="md-arrow-back" size={32}
-                onPress={()=>navigation.goBack()}/>
+                onPress={()=>navigation.goBack()} color={iconColor}/>
                 <TextInput 
                 value = {value}
                 onChangeText = {(text)=>{
                     setValue(text)
                 }}
-                style={{width:'70%', backgroundColor:"#e6e6e6"}}
+                style={{width:'70%', backgroundColor:colors.iconColor}}
                 />
-                 <Ionicons name="md-send" size={29} onPress={()=>fetchData()}/>
+                 <Ionicons color={iconColor} name="md-send" size={29} onPress={()=>fetchData()}/>
                  </View>
            {loading ?<ActivityIndicator size="large" color="red" style={{marginTop:10}}/>
             :null}

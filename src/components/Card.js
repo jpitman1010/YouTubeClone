@@ -1,30 +1,38 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Entypo, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { useNavigation, useTheme } from '@react-navigation/native';
 
 
 const Card =(props)=>{
+    const navigation = useNavigation();
+    const {colors} = useTheme();
+    const textColor = colors.iconColor;
     return(
-        <View marginBottom={10.5} margin={2}>
-            <Image 
-            source={{uri:`https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
-            style={{
-                width:'100%',
-                height: 200,
-            }}
-            />
-            <View style={{flexDirection:'row', margin:5,}}>
-                <MaterialIcons name="account-circle" size={41} color="black" />
-                <View style={{marginLeft:10.5, width:Dimensions.get('screen').width -50}}>
-                    <Text style={{fontSize:21}} 
-                        ellipsizeMode='tail' 
-                        numberOfLines={2}>
-                            {props.title}
-                    </Text>
-                    <Text>{props.channel}</Text>
+        <TouchableOpacity
+        onPress={()=>navigation.navigate("VideoPlayer",{videoId: props.videoId, title: props.title})}
+        >
+            <View marginBottom={10.5} margin={2}>
+                <Image 
+                source={{uri:`https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
+                style={{
+                    width:'100%',
+                    height: 200,
+                }}
+                />
+                <View style={{flexDirection:'row', margin:5,}}>
+                    <MaterialIcons name="account-circle" size={41} color={textColor} />
+                    <View style={{marginLeft:10.5, width:Dimensions.get('screen').width -50}}>
+                        <Text style={{fontSize:20,color:textColor, fontWeight:'bold'}} 
+                            ellipsizeMode='tail' 
+                            numberOfLines={2}>
+                                {props.title}
+                        </Text>
+                        <Text style={{fontSize:17, color:textColor}}>{props.channel}</Text>
+                    </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

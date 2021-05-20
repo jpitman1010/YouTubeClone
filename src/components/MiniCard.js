@@ -1,25 +1,34 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { useNavigation,useTheme } from '@react-navigation/native';
 
 
 const MiniCard = (props)=>{
+    const navigation = useNavigation();
+    const {colors} = useTheme();
+    const textColor = colors.iconColor;
+
     return(
-        <View style={{flexDirection:"row", margin:10}}>
-              <Image 
-            source={{uri:`https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
-            style={styles.images}
-            />
-            <View style={styles.textView}  ellipsizeMode="tail">
-                <Text 
-                style={styles.text}
-                numberOfLines={3}> 
-                {props.title}
-                </Text>
-                <Text style={styles.text2}>
-                    {props.channel}
-                </Text>
+        <TouchableOpacity
+        onPress={()=>navigation.navigate("VideoPlayer",{videoId: props.videoId, title: props.title})}
+        >
+            <View style={{flexDirection:"row", margin:10}}>
+                <Image 
+                source={{uri:`https://i.ytimg.com/vi/${props.videoId}/hqdefault.jpg`}}
+                style={styles.images}
+                />
+                <View style={styles.textView}  ellipsizeMode="tail">
+                    <Text 
+                    style= {{fontSize:18,fontWeight:'bold',color:textColor}}
+                    numberOfLines={3}> 
+                    {props.title}
+                    </Text>
+                    <Text style={{fontSize: 12,color:textColor}}>
+                        {props.channel}
+                    </Text>
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -30,13 +39,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         
     },
-    text: {
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    text2: {
-        fontSize: 12,
-    },
+
     images: {
         width:'45%',
         height: 100,
