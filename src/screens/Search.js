@@ -13,7 +13,7 @@ const Search = ({navigation})=>{
     const dispatch = useDispatch()
     const [value, setValue] = useState()
     const miniCardData = useSelector(state=>{
-        return state
+        return state.cardData
     })
     const [loading, setLoading] = useState(false)
 
@@ -47,7 +47,7 @@ const Search = ({navigation})=>{
                 onChangeText = {(text)=>{
                     setValue(text)
                 }}
-                style={{width:'70%', backgroundColor:colors.iconColor}}
+                style={{width:'70%', backgroundColor:colors.backgroundColor,borderWidth:1, borderColor:colors.border, padding:5, color:colors.iconColor}}
                 />
                  <Ionicons color={iconColor} name="md-send" size={29} onPress={()=>fetchData()}/>
                  </View>

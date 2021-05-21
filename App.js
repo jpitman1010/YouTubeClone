@@ -5,9 +5,8 @@ import { NavigationContainer, DefaultTheme, DarkTheme, useTheme } from '@react-n
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from 'react-native-vector-icons/Ionicons';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-
+import { Provider, useSelector } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
 
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
@@ -17,6 +16,7 @@ import Subscribe from './src/screens/Subscribe';
 import Constant from 'expo-constants';
 import { MaterialIcons } from '@expo/vector-icons';
 import { reducer } from './src/reducers/reducer';
+import { themeReducer } from './src/reducers/themeReducer'
 
 const customDarkTheme={
   ...DarkTheme,
@@ -33,11 +33,16 @@ const customDefaultTheme={
     ...DefaultTheme.colors,
     headerColor:"white",
     iconColor:"black",
-    tabIcon:"red"
+    tabIcon:"red",
+    border:"black",
 
   }
 }
-const store = createStore(reducer)
+const rootReducer = combineReducers({
+  cardData:reducer, //[]
+  darkMode: themeReducer //false
+})
+const store = createStore(rootReducer)
 
 const Stack = createStackNavigator()
 const Tabs = createBottomTabNavigator()
@@ -75,17 +80,26 @@ const RootHome = ()=>{
   )
 }
 
-export default function App() {
+export default ()=>{
+  return(
+  <Provider store={store}>
+    <Navigation />
+   </Provider>
+  )
+}
+
+export function Navigation() {
+  let currentTheme = useSelector(state=>{
+    return state.darkMode
+  })
   return (
-    <Provider store={store}>
-      <NavigationContainer theme={customDarkTheme}>
+      <NavigationContainer theme={currentTheme? customDarkTheme:customDefaultTheme}>
         <Stack.Navigator>
           <Stack.Screen name="Root Home" component={RootHome} />
           <Stack.Screen name="Search" component={Search} />
           <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
         </Stack.Navigator>
       </NavigationContainer>
-   </Provider>
   );
 }
 
